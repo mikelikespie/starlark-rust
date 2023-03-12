@@ -1,0 +1,15 @@
+{
+  "name": "rustwebasm",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Mike Lewis <mikelikespie@gmail.com>",
+  "dependencies": {
+    "@types/node": "^18.15.0",
+    "html-webpack-plugin": "^5.5.0",
+    "pnpm": "^7.29.1",
+    "typescript": "4.9.5",
+    "webpack": "^5.76.1",
+    "webpack-cli": "^5.0.1",
+    "webpack-dev-server": "^4.11.1"
+  }
+}

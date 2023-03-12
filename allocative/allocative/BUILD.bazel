@@ -1,0 +1,2 @@
+# Export file Cargo.toml. This is a BUILD.bazel file
+exports_files(["Cargo.toml"])
