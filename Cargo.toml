@@ -21,3 +21,8 @@ ctor = "0.1.26"
 proc-macro2 = "1.0"
 syn = "1.0"
 quote = "1.0.3"
+
+
+
+[patch.crates-io]
+rustix = { path = "submodules/rustix" }

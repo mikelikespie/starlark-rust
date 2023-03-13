@@ -46,6 +46,7 @@ pub(crate) mod validate;
 #[allow(unused_braces)]
 #[cfg_attr(feature = "gazebo_lint", allow(gazebo_lint_use_dupe))]
 mod grammar {
+    // include!(concat!(env!("OUT_DIR"), "/syntax/grammar.rs"));
     include!("./grammar.rs");
 }
 

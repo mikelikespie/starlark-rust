@@ -1,0 +1,3 @@
+[submodule "submodules/rustix"]
+	path = submodules/rustix
+	url = https://github.com/bytecodealliance/rustix.git

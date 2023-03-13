@@ -16,7 +16,7 @@
  */
 
 use dupe::Dupe;
-use hashbrown::HashMap;
+use std::collections::HashMap;
 use once_cell::sync::Lazy;
 
 use crate::environment::Methods;

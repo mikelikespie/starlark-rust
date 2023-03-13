@@ -134,6 +134,12 @@ crates_repository(
         "lalrpop": crate.spec(
             version = "0.19.7",
         ),
+        "rustix": crate.spec(
+            version = "0.36.9",
+            default_features = False,
+            features = [
+            ],
+        ),
     },
 )
 
