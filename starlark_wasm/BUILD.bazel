@@ -2,6 +2,8 @@ load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_library", "rust_shared_l
 load("@rules_rust//wasm_bindgen:wasm_bindgen.bzl", "rust_wasm_bindgen")
 load("@aspect_rules_js//js:defs.bzl", "js_library")
 load("@aspect_rules_webpack//webpack:defs.bzl", "webpack_binary", "webpack_bundle")
+load("@aspect_rules_ts//ts:defs.bzl", "ts_project")
+load("@aspect_rules_ts//ts:defs.bzl", "ts_config")
 
 # rust shared library that depends on '//starlark'
 rust_shared_library(
@@ -34,16 +36,35 @@ webpack_bundle(
         ":starlark_wasm_bindgen",
         ":index.html",
     ],
-    entry_point = "entry.js",
+    entry_point = "src/entry.js",
     webpack = ":webpack",
     webpack_config = "webpack.config.js",
     deps = [
         ":webpack_config",
     ],
 )
+
 js_library(
     name = "webpack_config",
     deps = [
         "//:node_modules/webpack",
     ],
+)
+ts_project(
+    name = "typescript",
+    srcs = glob([
+        "src/*.ts",
+        "src/*.tsx",
+    ]) + [":starlark_wasm_bindgen"],
+    declaration = True,
+    tsconfig = ":tsconfig",
+    deps = [
+        "//:node_modules/@types/node",
+    ],
+)
+
+ts_config(
+    name = "tsconfig",
+    src = "tsconfig.json",
+    visibility = [":__subpackages__"],
 )

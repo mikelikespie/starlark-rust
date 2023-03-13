@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "baseUrl": ".",
+    "strict": true,
+    "types": [
+      "node"
+    ],
+    "rootDirs": ["src", "bazel-bin/src"],
+    "paths": {
+      //      "*": [
+      //        "./src/*",
+      //        "./bazel-bin/src/*"
+      //      ],
+//      "my_app_wasm_bindgen": [
+//        "./src/my_app_wasm_bindgen.d.ts",
+//        "./bazel-bin/src/my_app_wasm_bindgen.d.ts"
+//      ]
+    }
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*/.tsx"
+  ]
+}
