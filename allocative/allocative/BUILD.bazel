@@ -5,12 +5,12 @@ licenses(["notice"])
 rust_library(
     name = "allocative",
     srcs = glob(["src/**/*.rs"]),
-    edition = "2021",
     crate_features = [
         "bumpalo",
         "hashbrown",
         "num-bigint",
     ],
+    edition = "2021",
     proc_macro_deps = [
         "//allocative/allocative_derive",
         "@crate_index//:ctor",

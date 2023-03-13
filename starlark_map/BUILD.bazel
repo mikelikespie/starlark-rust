@@ -5,8 +5,8 @@ licenses(["notice"])  # Add a license to the target
 rust_library(
     name = "starlark_map",
     srcs = glob(["src/**/*.rs"]),
-    edition = "2021",
     crate_features = ["hashbrown"],
+    edition = "2021",
     proc_macro_deps = [
     ],
     visibility = ["//visibility:public"],

@@ -119,7 +119,6 @@ load("@crate_index//:defs.bzl", "crate_repositories")
 
 crate_repositories()
 
-
 http_archive(
     name = "io_bazel_stardoc",
     sha256 = "3fd8fec4ddec3c670bd810904e2e33170bedfe12f90adf943508184be458c8bb",

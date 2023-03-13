@@ -20,10 +20,14 @@ fn main() {
 }
 
 fn lalrpop() {
-    let source = "src/syntax/grammar.lalrpop";
+    // cource is first cli argument
+    let source = std::env::args().nth(1).unwrap();
+    let ruleDir = std::env::args().nth(2).unwrap();
     println!("cargo:rerun-if-changed={}", source);
     lalrpop::Configuration::new()
-        .use_cargo_dir_conventions()
+        // .use_cargo_dir_conventions()
+        .set_out_dir(ruleDir)
+        .set_in_dir("src")
         .emit_report(true)
         .process_file(source)
         .unwrap();
