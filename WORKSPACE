@@ -97,10 +97,21 @@ load("@npm_deps//:repositories.bzl", "npm_repositories")
 
 npm_repositories()
 
-load("@rules_rust//crate_universe:defs.bzl", "crates_repository")
+load("@rules_rust//crate_universe:defs.bzl", "crate", "crates_repository")
 
 crates_repository(
     name = "crate_index",
+    annotations = {
+        "clap": [crate.annotation(
+            crate_features = [
+                "std",
+                "help",
+                "usage",
+                "error-context",
+                "suggestions",
+            ],
+        )],
+    },
     cargo_lockfile = "//:Cargo.lock",
     lockfile = "//:Cargo.Bazel.lock",
     manifests = [

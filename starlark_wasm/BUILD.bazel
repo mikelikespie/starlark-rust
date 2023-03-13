@@ -1,0 +1,19 @@
+load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_library", "rust_shared_library")
+load("@rules_rust//wasm_bindgen:wasm_bindgen.bzl", "rust_wasm_bindgen")
+
+# rust shared library that depends on '//starlark'
+rust_shared_library(
+    name = 'starlark_wasm',
+    srcs = ['src/lib.rs'],
+    deps = [
+        '//starlark',
+    ],
+    edition = '2021',
+)
+
+
+rust_wasm_bindgen(
+    name = "starlark_wasm_bindgen",
+    target = "web",
+    wasm_file = ":starlark_wasm",
+)

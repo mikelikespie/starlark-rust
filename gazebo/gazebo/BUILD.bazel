@@ -4,7 +4,7 @@ licenses(["notice"])  # Add a license to the target
 
 rust_library(
     name = "gazebo",
-    srcs = glob(["src/**/*.rs"]),
+    srcs = glob(["src/**/*.rs"], exclude =["tests/**"]),
     edition = "2021",
     proc_macro_deps = [
         "//gazebo/gazebo_derive",

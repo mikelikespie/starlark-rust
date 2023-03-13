@@ -52,6 +52,7 @@ rust_library(
         "@crate_index//:thiserror",
         "@crate_index//:walkdir",
     ],
+    visibility = ["//visibility:public"],
 )
 
 # rust binary for build_grammar.rs
