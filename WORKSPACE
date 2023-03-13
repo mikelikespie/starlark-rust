@@ -111,6 +111,12 @@ crates_repository(
                 "suggestions",
             ],
         )],
+        "rustyline": [crate.annotation(
+            crate_features = [
+                # "custom-bindings",
+                # "with-dirs",
+            ],
+        )],
     },
     cargo_lockfile = "//:Cargo.lock",
     lockfile = "//:Cargo.Bazel.lock",
@@ -124,6 +130,11 @@ crates_repository(
         "//starlark:Cargo.toml",
         "//:Cargo.toml",
     ],
+    packages = {
+        "lalrpop": crate.spec(
+            version = "0.19.7",
+        ),
+    },
 )
 
 load("@crate_index//:defs.bzl", "crate_repositories")
