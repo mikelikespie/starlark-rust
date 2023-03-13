@@ -1,0 +1,14 @@
+load("@rules_rust//rust:defs.bzl", "rust_proc_macro")
+
+rust_proc_macro(
+    name = "dupe_derive",
+    srcs = glob(["src/*.rs"]),
+    crate_features = ["extra-traits"],
+    edition = "2021",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@crate_index//:proc-macro2",
+        "@crate_index//:quote",
+        "@crate_index//:syn",
+    ],
+)

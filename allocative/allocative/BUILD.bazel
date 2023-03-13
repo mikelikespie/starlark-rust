@@ -1,2 +1,20 @@
-# Export file Cargo.toml. This is a BUILD.bazel file
-exports_files(["Cargo.toml"])
+load("@rules_rust//rust:defs.bzl", "rust_library")
+
+licenses(["notice"])
+
+rust_library(
+    name = "allocative",
+    srcs = glob(["src/**/*.rs"]),
+    edition = "2021",
+    proc_macro_deps = [
+        "//allocative/allocative_derive",
+        "@crate_index//:ctor",
+    ],
+    deps = [
+        "@crate_index//:bumpalo",
+        "@crate_index//:either",
+        "@crate_index//:hashbrown",
+        "@crate_index//:num-bigint",
+        "@crate_index//:once_cell",
+    ],
+)

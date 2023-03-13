@@ -1,0 +1,13 @@
+load("@rules_rust//rust:defs.bzl", "rust_proc_macro")
+
+rust_proc_macro(
+    name = "gazebo_derive",
+    srcs = glob(["src/*.rs"]),
+    edition = "2021",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@crate_index//:proc-macro2",
+        "@crate_index//:quote",
+        "@crate_index//:syn",
+    ],
+)

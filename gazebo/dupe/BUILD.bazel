@@ -1,0 +1,13 @@
+load("@rules_rust//rust:defs.bzl", "rust_library")
+
+licenses(["notice"])  # Add a license to the target
+
+rust_library(
+    name = "dupe",
+    srcs = glob(["src/**/*.rs"]),
+    edition = "2021",
+    proc_macro_deps = [
+        "//gazebo/dupe_derive",
+    ],
+    visibility = ["//visibility:public"],
+)
