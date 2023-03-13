@@ -48,6 +48,7 @@ rustyline = { version = "11.0.0", default-features = false, features = [
     "custom-bindings",
     "with-dirs",
 ] }
+rustix = { version = "0.36.9", default-features = false, features = [] }
 maplit = "1.0.2"
 lsp-server = "0.5"
 lsp-types = "0.93.0"

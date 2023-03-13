@@ -1,5 +1,5 @@
 {
-  "checksum": "797c366b5a874218cd906bb4cd2f9e66d46e7346afd372a024e8cb83f54a83df",
+  "checksum": "47fbd6535715d20cad8a4aeed4c278ed02f9e9aa1619703172751a13c20abe45",
   "crates": {
     "Inflector 0.11.4": {
       "name": "Inflector",
@@ -5423,15 +5423,193 @@
           "**"
         ],
         "crate_features": {
-          "common": [
-            "default",
-            "io-lifetimes",
-            "libc",
-            "std",
-            "termios",
-            "use-libc-auxv"
-          ],
-          "selects": {}
+          "common": [],
+          "selects": {
+            "aarch64-apple-darwin": [
+              "default",
+              "io-lifetimes",
+              "libc",
+              "std",
+              "termios",
+              "use-libc-auxv"
+            ],
+            "aarch64-apple-ios": [
+              "default",
+              "io-lifetimes",
+              "libc",
+              "std",
+              "termios",
+              "use-libc-auxv"
+            ],
+            "aarch64-apple-ios-sim": [
+              "default",
+              "io-lifetimes",
+              "libc",
+              "std",
+              "termios",
+              "use-libc-auxv"
+            ],
+            "aarch64-linux-android": [
+              "default",
+              "io-lifetimes",
+              "libc",
+              "std",
+              "termios",
+              "use-libc-auxv"
+            ],
+            "aarch64-unknown-linux-gnu": [
+              "default",
+              "io-lifetimes",
+              "libc",
+              "std",
+              "termios",
+              "use-libc-auxv"
+            ],
+            "arm-unknown-linux-gnueabi": [
+              "default",
+              "io-lifetimes",
+              "libc",
+              "std",
+              "termios",
+              "use-libc-auxv"
+            ],
+            "armv7-linux-androideabi": [
+              "default",
+              "io-lifetimes",
+              "libc",
+              "std",
+              "termios",
+              "use-libc-auxv"
+            ],
+            "armv7-unknown-linux-gnueabi": [
+              "default",
+              "io-lifetimes",
+              "libc",
+              "std",
+              "termios",
+              "use-libc-auxv"
+            ],
+            "i686-apple-darwin": [
+              "default",
+              "io-lifetimes",
+              "libc",
+              "std",
+              "termios",
+              "use-libc-auxv"
+            ],
+            "i686-linux-android": [
+              "default",
+              "io-lifetimes",
+              "libc",
+              "std",
+              "termios",
+              "use-libc-auxv"
+            ],
+            "i686-unknown-freebsd": [
+              "default",
+              "io-lifetimes",
+              "libc",
+              "std",
+              "termios",
+              "use-libc-auxv"
+            ],
+            "i686-unknown-linux-gnu": [
+              "default",
+              "io-lifetimes",
+              "libc",
+              "std",
+              "termios",
+              "use-libc-auxv"
+            ],
+            "powerpc-unknown-linux-gnu": [
+              "default",
+              "io-lifetimes",
+              "libc",
+              "std",
+              "termios",
+              "use-libc-auxv"
+            ],
+            "riscv32imc-unknown-none-elf": [
+              "default",
+              "io-lifetimes",
+              "libc",
+              "std",
+              "termios",
+              "use-libc-auxv"
+            ],
+            "riscv64gc-unknown-none-elf": [
+              "default",
+              "io-lifetimes",
+              "libc",
+              "std",
+              "termios",
+              "use-libc-auxv"
+            ],
+            "s390x-unknown-linux-gnu": [
+              "default",
+              "io-lifetimes",
+              "libc",
+              "std",
+              "termios",
+              "use-libc-auxv"
+            ],
+            "wasm32-unknown-unknown": [
+              "default",
+              "io-lifetimes",
+              "libc",
+              "std",
+              "termios",
+              "use-libc-auxv"
+            ],
+            "wasm32-wasi": [
+              "default",
+              "io-lifetimes",
+              "libc",
+              "std",
+              "termios",
+              "use-libc-auxv"
+            ],
+            "x86_64-apple-darwin": [
+              "default",
+              "io-lifetimes",
+              "libc",
+              "std",
+              "termios",
+              "use-libc-auxv"
+            ],
+            "x86_64-apple-ios": [
+              "default",
+              "io-lifetimes",
+              "libc",
+              "std",
+              "termios",
+              "use-libc-auxv"
+            ],
+            "x86_64-linux-android": [
+              "default",
+              "io-lifetimes",
+              "libc",
+              "std",
+              "termios",
+              "use-libc-auxv"
+            ],
+            "x86_64-unknown-freebsd": [
+              "default",
+              "io-lifetimes",
+              "libc",
+              "std",
+              "termios",
+              "use-libc-auxv"
+            ],
+            "x86_64-unknown-linux-gnu": [
+              "default",
+              "io-lifetimes",
+              "libc",
+              "std",
+              "termios",
+              "use-libc-auxv"
+            ]
+          }
         },
         "deps": {
           "common": [
@@ -6450,6 +6628,10 @@
             {
               "id": "regex 1.7.1",
               "target": "regex"
+            },
+            {
+              "id": "rustix 0.36.9",
+              "target": "rustix"
             },
             {
               "id": "rustyline 11.0.0",
@@ -7763,6 +7945,7 @@
             "knownfolders",
             "minwinbase",
             "minwindef",
+            "ntdef",
             "objbase",
             "processenv",
             "shellapi",
@@ -7986,6 +8169,8 @@
           "common": [
             "Win32",
             "Win32_Foundation",
+            "Win32_NetworkManagement",
+            "Win32_NetworkManagement_IpHelper",
             "Win32_Networking",
             "Win32_Networking_WinSock",
             "Win32_Security",

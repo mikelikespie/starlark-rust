@@ -22,17 +22,17 @@ use std::env;
 use std::io;
 
 use rustyline::error::ReadlineError;
-use rustyline::Editor;
+use rustyline::DefaultEditor;
 
 /// Wrapper for the readline library, whichever we are using at the moment.
 pub struct ReadLine {
-    editor: Editor<()>,
+    editor: DefaultEditor,
     histfile: Option<String>,
 }
 
 impl ReadLine {
     pub fn new(histfile_env: &str) -> ReadLine {
-        let mut editor = Editor::new();
+        let mut editor = DefaultEditor::new().unwrap();
         let histfile = if let Ok(histfile) = env::var(histfile_env) {
             if let Err(e) = editor.load_history(&histfile) {
                 match e {
