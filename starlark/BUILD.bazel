@@ -1,73 +1,67 @@
-# load("@npm_deps//:defs.bzl", "npm_link_all_packages")
-# load("@aspect_rules_ts//ts:defs.bzl", "ts_config")
-
-# npm_link_all_packages(name = "node_modules")
-
-# ts_config(
-#     name = "tsconfig",
-#     src = "tsconfig.json",
-#     visibility = ["//src:__subpackages__"],
-# )
 load("@rules_rust//rust:defs.bzl", "rust_library")
+load("@rules_rust//rust:defs.bzl", "rust_binary")
+
+licenses(["notice"])  # Add a license to the target
 
 rust_library(
     name = "starlark",
     srcs = glob(
         ["src/**/*.rs"],
-        exclude = ["**/tests/**"],
+        exclude = ["src/tests/**"],
     ),
-    # rustc_flags = [
-    #     "--cap-lints", "warn",
-    #     "--cfg=feature=\"allocative/bumpalo\"",
-    #     "--cfg=feature=\"allocative/hashbrown\"",
-    #     "--cfg=feature=\"allocative/num-bigint\"",
-    # ],
-    # features = {
-    #     "allocative": ["bumpalo", "hashbrown", "num-bigint"],
-    # },
-    edition = "2018",
+    edition = "2021",
     proc_macro_deps = [
+        "//starlark_derive",
         "@crate_index//:derivative",
         "@crate_index//:derive_more",
         "@crate_index//:paste",
     ],
+    crate_features = ["hashbrown"],
     deps = [
+        "//gazebo/gazebo",
+        "//gazebo/dupe",
+        "//allocative/allocative",
+        "//starlark_map",
         "@crate_index//:annotate-snippets",
         "@crate_index//:anyhow",
+        "@crate_index//:bumpalo",
+        "@crate_index//:clap",
+        "@crate_index//:debugserver-types",
+        "@crate_index//:either",
         "@crate_index//:erased-serde",
+        "@crate_index//:fancy-regex",
+        "@crate_index//:hashbrown",
+        "@crate_index//:inventory",
         "@crate_index//:itertools",
         "@crate_index//:lalrpop-util",
-        "@crate_index//:once_cell",
-        "@crate_index//:bumpalo",
-        "@crate_index//:either",
-        "@crate_index//:static_assertions",
-        "@crate_index//:memoffset",
-        "@crate_index//:thiserror",
-        "@crate_index//:walkdir",
-        "@crate_index//:serde",
         "@crate_index//:logos",
-        "@crate_index//:serde_json",
-        "@crate_index//:rustyline",
-        "@crate_index//:maplit",
         "@crate_index//:lsp-server",
         "@crate_index//:lsp-types",
+        "@crate_index//:maplit",
         "@crate_index//:memchr",
-        "@crate_index//:debugserver-types",
-        "@crate_index//:hashbrown",
-        "@crate_index//:textwrap",
-        "@crate_index//:fancy-regex",
-        "@crate_index//:regex",
-        "@crate_index//:strsim",
-        "@crate_index//:argfile",
+        "@crate_index//:memoffset",
         "@crate_index//:num-bigint",
         "@crate_index//:num-traits",
-        "@crate_index//:inventory",
-        "@crate_index//:clap",
-        # "//starlark_derive:starlark_derive",
-        # "//gazebo/dupe:dupe",
-        # "//starlark_map:starlark_map",
-        # "//lalrpop:lalrpop",
-        # "//gazebo:gazebo",
-        # "@rules_rust//third_party:static_assertions",
+        "@crate_index//:once_cell",
+        "@crate_index//:regex",
+        "@crate_index//:rustyline",
+        "@crate_index//:serde",
+        "@crate_index//:serde_json",
+        "@crate_index//:static_assertions",
+        "@crate_index//:strsim",
+        "@crate_index//:textwrap",
+        "@crate_index//:thiserror",
+        "@crate_index//:walkdir",
+    ],
+)
+
+
+# rust binary for build_grammar.rs
+rust_binary(
+    name = "build_grammar",
+    srcs = ["build_grammar.rs"],
+    edition = "2021",
+    deps = [
+        "@crate_index//:lalrpop",
     ],
 )

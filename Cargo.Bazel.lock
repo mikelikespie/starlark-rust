@@ -1,5 +1,5 @@
 {
-  "checksum": "5bfa61216cb2987f3e898c74b6071a6a7244e5e02680b19e62ee074e174028d1",
+  "checksum": "f947e270a4f4f9f67e8f6043fe3e96b53f782df8557a0a4d75ea88c3e68f17c3",
   "crates": {
     "Inflector 0.11.4": {
       "name": "Inflector",
@@ -626,6 +626,13 @@
         "compile_data_glob": [
           "**"
         ],
+        "crate_features": {
+          "common": [
+            "default",
+            "std"
+          ],
+          "selects": {}
+        },
         "deps": {
           "common": [
             {
@@ -2282,6 +2289,9 @@
         ],
         "crate_features": {
           "common": [
+            "ahash",
+            "default",
+            "inline-more",
             "raw"
           ],
           "selects": {}
@@ -2797,6 +2807,7 @@
         ],
         "crate_features": {
           "common": [
+            "default",
             "use_alloc",
             "use_std"
           ],
@@ -5724,6 +5735,23 @@
         "compile_data_glob": [
           "**"
         ],
+        "crate_features": {
+          "common": [],
+          "selects": {
+            "aarch64-pc-windows-msvc": [
+              "default",
+              "use_std"
+            ],
+            "i686-pc-windows-msvc": [
+              "default",
+              "use_std"
+            ],
+            "x86_64-pc-windows-msvc": [
+              "default",
+              "use_std"
+            ]
+          }
+        },
         "edition": "2015",
         "version": "1.1.0"
       },
@@ -6282,6 +6310,10 @@
         "deps_dev": {
           "common": [
             {
+              "id": "lalrpop 0.19.8",
+              "target": "lalrpop"
+            },
+            {
               "id": "rand 0.8.5",
               "target": "rand"
             }
@@ -6311,16 +6343,7 @@
       "build_script_attrs": {
         "data_glob": [
           "**"
-        ],
-        "deps": {
-          "common": [
-            {
-              "id": "lalrpop 0.19.8",
-              "target": "lalrpop"
-            }
-          ],
-          "selects": {}
-        }
+        ]
       },
       "license": "Apache-2.0"
     },
@@ -7519,6 +7542,7 @@
             "fileapi",
             "handleapi",
             "knownfolders",
+            "minwinbase",
             "minwindef",
             "objbase",
             "processenv",
@@ -7749,7 +7773,10 @@
             "Win32_System",
             "Win32_System_Console",
             "Win32_System_IO",
+            "Win32_System_LibraryLoader",
+            "Win32_System_SystemServices",
             "Win32_System_Threading",
+            "Win32_System_WindowsProgramming",
             "default"
           ],
           "selects": {}

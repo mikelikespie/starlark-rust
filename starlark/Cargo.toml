@@ -65,6 +65,7 @@ allocative = { workspace = true, features = ["bumpalo", "hashbrown", "num-bigint
 
 [dev-dependencies]
 rand = { version = "0.8.4", features = ["small_rng"] }
+lalrpop = "0.19.7"
 
 [features]
 # @oss-disable: default = ["gazebo_lint"]

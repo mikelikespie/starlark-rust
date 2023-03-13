@@ -6,10 +6,16 @@ rust_library(
     name = "allocative",
     srcs = glob(["src/**/*.rs"]),
     edition = "2021",
+    crate_features = [
+        "bumpalo",
+        "hashbrown",
+        "num-bigint",
+    ],
     proc_macro_deps = [
         "//allocative/allocative_derive",
         "@crate_index//:ctor",
     ],
+    visibility = ["//visibility:public"],
     deps = [
         "@crate_index//:bumpalo",
         "@crate_index//:either",
