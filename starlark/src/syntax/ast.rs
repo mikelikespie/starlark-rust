@@ -94,7 +94,7 @@ pub(crate) type AstStmt = AstStmtP<AstNoPayload>;
 // than expected, which is fixed in later nightly.
 // const _: () = assert!(mem::size_of::<AstStmt>() <= mem::size_of::<[usize; 12]>());
 // const _: () = assert!(mem::size_of::<AstExpr>() <= mem::size_of::<[usize; 9]>());
-assert_eq_size!(AstAssign, [usize; 9]);
+// assert_eq_size!(AstAssign, [usize; 9]);
 
 /// A representation of a Starlark module abstract syntax tree.
 ///

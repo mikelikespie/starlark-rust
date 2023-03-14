@@ -11,14 +11,14 @@ rust_shared_library(
     edition = "2021",
     deps = [
         "//starlark",
+        "@crate_index//:js-sys",
+        "@crate_index//:wasm-bindgen",
+        "@crate_index//:web-sys",
     ],
 )
 
 rust_wasm_bindgen(
     name = "starlark_wasm_bindgen",
-    # bindgen_flags = [
-    #     "--size_t-is-usize",
-    # ],
     target = "web",
     wasm_file = ":starlark_wasm",
 )
@@ -37,7 +37,7 @@ webpack_bundle(
         ":index.html",
         ":starlark_wasm_bindgen",
     ],
-    entry_point = "src/entry.js",
+    entry_point = "entry.js",
     webpack = ":webpack",
     webpack_config = "webpack.config.js",
     deps = [
@@ -55,8 +55,8 @@ js_library(
 ts_project(
     name = "typescript",
     srcs = glob([
-        "src/*.ts",
-        "src/*.tsx",
+        "*.ts",
+        "*.tsx",
     ]) + [":starlark_wasm_bindgen"],
     declaration = True,
     tsconfig = ":tsconfig",

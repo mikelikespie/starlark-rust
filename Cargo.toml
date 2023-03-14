@@ -8,6 +8,7 @@ members = [
     "gazebo/gazebo_derive",
     "starlark",
     "starlark_derive",
+    "starlark_wasm",
 ]
 
 [workspace.dependencies]
@@ -24,5 +25,5 @@ quote = "1.0.3"
 
 
 
-[patch.crates-io]
-rustix = { path = "submodules/rustix" }
+# [patch.crates-io]
+# rustix = { path = "submodules/rustix" }

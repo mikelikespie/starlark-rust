@@ -1,0 +1,24 @@
+[package]
+name = "my_lib"
+version = "0.1.0-pre"
+edition = "2021"
+# path = "src/lib.rs"
+
+
+[dependencies]
+js-sys = "0.3.60"
+wasm-bindgen = "=0.2.83"
+
+[dependencies.web-sys]
+version = "0.3.60"
+features = [
+    'Document',
+    'Element',
+    'HtmlCanvasElement',
+    'WebGlBuffer',
+    'WebGlVertexArrayObject',
+    'WebGl2RenderingContext',
+    'WebGlProgram',
+    'WebGlShader',
+    'Window',
+]

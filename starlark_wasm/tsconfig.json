@@ -3,26 +3,35 @@
     "declaration": true,
     "baseUrl": ".",
     "strict": true,
-    "types": [
-      "node"
+    // "types": [
+    //   "node"
+    // ],
+    "rootDirs": [
+      ".",
+      "../bazel-bin/starlark_wasm"
     ],
-    "rootDirs": ["src", "bazel-bin/src"],
     "paths": {
       //      "*": [
       //        "./src/*",
       //        "./bazel-bin/src/*"
       //      ],
-//      "my_app_wasm_bindgen": [
-//        "./src/my_app_wasm_bindgen.d.ts",
-//        "./bazel-bin/src/my_app_wasm_bindgen.d.ts"
-//      ]
-    }
+      //      "my_app_wasm_bindgen": [
+      //        "./src/my_app_wasm_bindgen.d.ts",
+      //        "./bazel-bin/src/my_app_wasm_bindgen.d.ts"
+      //      ]
+    },
+    "target": "es2019",
+    "lib": [
+      "ES2019",
+      "DOM"
+    ],
   },
   "exclude": [
     "node_modules"
   ],
   "include": [
-    "src/**/*.ts",
-    "src/**/*/.tsx"
+    "**/*.ts",
+    "**/*/.tsx",
+    "entry.ts"
   ]
 }

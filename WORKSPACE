@@ -124,6 +124,7 @@ crates_repository(
         "//gazebo/gazebo:Cargo.toml",
         "//gazebo/gazebo_derive:Cargo.toml",
         "//starlark_derive:Cargo.toml",
+        "//starlark_wasm:Cargo.toml",
         "//starlark:Cargo.toml",
         "//:Cargo.toml",
     ],
