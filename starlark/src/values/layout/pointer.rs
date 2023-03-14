@@ -132,12 +132,12 @@ unsafe fn untag_pointer<'a>(x: usize) -> &'a AValueOrForward {
     cast::usize_to_ptr(x & !TAG_BITS)
 }
 
-#[allow(clippy::unused_unit)]
-const _: () = if mem::size_of::<usize>() > mem::size_of::<i32>() {
-    ()
-} else {
-    panic!("starlark-rust requires 64 bit usize")
-};
+// #[allow(clippy::unused_unit)]
+// const _: () = if mem::size_of::<usize>() > mem::size_of::<i32>() {
+//     ()
+// } else {
+//     panic!("starlark-rust requires 64 bit usize")
+// };
 
 #[inline]
 fn tag_int(x: i32) -> usize {

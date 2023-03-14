@@ -104,11 +104,8 @@ crates_repository(
     annotations = {
         "clap": [crate.annotation(
             crate_features = [
+                "derive",
                 "std",
-                "help",
-                "usage",
-                "error-context",
-                "suggestions",
             ],
         )],
         "rustyline": [crate.annotation(
@@ -135,10 +132,10 @@ crates_repository(
             version = "0.19.7",
         ),
         "rustix": crate.spec(
-            version = "0.36.9",
             default_features = False,
             features = [
             ],
+            version = "0.36.9",
         ),
     },
 )

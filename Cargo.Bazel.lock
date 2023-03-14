@@ -1,5 +1,5 @@
 {
-  "checksum": "4ba119a5ea7c661190f9bcf9d20f0d06e13ea65830bdbfb47646a0ec28152e67",
+  "checksum": "e0f9481e88683af05a5984f1a33ed2e3bfe21b392a4626129b492c4b4ee62e28",
   "crates": {
     "Inflector 0.11.4": {
       "name": "Inflector",
@@ -830,11 +830,7 @@
         "crate_features": {
           "common": [
             "derive",
-            "error-context",
-            "help",
-            "std",
-            "suggestions",
-            "usage"
+            "std"
           ],
           "selects": {}
         },

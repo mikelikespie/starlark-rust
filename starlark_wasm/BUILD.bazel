@@ -1,23 +1,24 @@
-load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_library", "rust_shared_library")
+load("@rules_rust//rust:defs.bzl", "rust_shared_library")
 load("@rules_rust//wasm_bindgen:wasm_bindgen.bzl", "rust_wasm_bindgen")
 load("@aspect_rules_js//js:defs.bzl", "js_library")
 load("@aspect_rules_webpack//webpack:defs.bzl", "webpack_binary", "webpack_bundle")
-load("@aspect_rules_ts//ts:defs.bzl", "ts_project")
-load("@aspect_rules_ts//ts:defs.bzl", "ts_config")
+load("@aspect_rules_ts//ts:defs.bzl", "ts_config", "ts_project")
 
 # rust shared library that depends on '//starlark'
 rust_shared_library(
-    name = 'starlark_wasm',
-    srcs = ['src/lib.rs'],
+    name = "starlark_wasm",
+    srcs = ["src/lib.rs"],
+    edition = "2021",
     deps = [
-        '//starlark',
+        "//starlark",
     ],
-    edition = '2021',
 )
-
 
 rust_wasm_bindgen(
     name = "starlark_wasm_bindgen",
+    # bindgen_flags = [
+    #     "--size_t-is-usize",
+    # ],
     target = "web",
     wasm_file = ":starlark_wasm",
 )
@@ -33,8 +34,8 @@ webpack_bundle(
         ":starlark_wasm_bindgen",
     ],
     data = [
-        ":starlark_wasm_bindgen",
         ":index.html",
+        ":starlark_wasm_bindgen",
     ],
     entry_point = "src/entry.js",
     webpack = ":webpack",
@@ -50,6 +51,7 @@ js_library(
         "//:node_modules/webpack",
     ],
 )
+
 ts_project(
     name = "typescript",
     srcs = glob([

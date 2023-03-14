@@ -39,6 +39,12 @@ pub(crate) fn derive_docs(input: proc_macro::TokenStream) -> proc_macro::TokenSt
         .into()
 }
 
+// #[cfg(feature = "wasm")]
+fn expand_docs_derive(input: DeriveInput) -> syn::Result<proc_macro2::TokenStream> {
+    return Ok(quote! {});
+}
+
+#[cfg(feature = "no_wasm")]
 fn expand_docs_derive(input: DeriveInput) -> syn::Result<proc_macro2::TokenStream> {
     let span = input.span();
     let DeriveInput {
