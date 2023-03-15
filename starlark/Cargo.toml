@@ -43,6 +43,9 @@ gazebo = { workspace = true }
 walkdir = "2.3"
 serde = { version = "1.0", features = ["derive"] }
 logos = "0.12"
+
+chrono = { version = "0.4.24", features = ["wasmbind"] }
+
 serde_json = "1.0"
 rustyline = { version = "11.0.0", default-features = false, features = [
     "custom-bindings",

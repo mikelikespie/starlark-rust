@@ -13,6 +13,7 @@ rust_shared_library(
         "//starlark",
         "@crate_index//:js-sys",
         "@crate_index//:wasm-bindgen",
+        "@crate_index//:chrono",
         "@crate_index//:web-sys",
     ],
 )
@@ -21,6 +22,14 @@ rust_wasm_bindgen(
     name = "starlark_wasm_bindgen",
     target = "web",
     wasm_file = ":starlark_wasm",
+    bindgen_flags = ["--keep-debug"],
+)
+
+rust_wasm_bindgen(
+    name = "starlark_wasm_bindgen_nodejs",
+    target = "nodejs",
+    wasm_file = ":starlark_wasm",
+    bindgen_flags = ["--keep-debug"],
 )
 
 webpack_binary(

@@ -53,12 +53,13 @@ use crate::hint::unlikely;
 use crate::syntax::ast::AstModule;
 use crate::syntax::DialectTypes;
 use crate::values::Value;
+use chrono::{Duration as OtherDuration, Utc};
 
 impl<'v, 'a> Evaluator<'v, 'a> {
     /// Evaluate an [`AstModule`] with this [`Evaluator`], modifying the in-scope
     /// [`Module`](crate::environment::Module) as appropriate.
     pub fn eval_module(&mut self, ast: AstModule, globals: &Globals) -> anyhow::Result<Value<'v>> {
-        let start = Instant::now();
+        let start = Utc::now();
 
         let AstModule {
             codemap,
@@ -151,7 +152,7 @@ impl<'v, 'a> Evaluator<'v, 'a> {
         }
         self.module_def_info = old_def_info;
 
-        self.module_env.add_eval_duration(start.elapsed());
+        self.module_env.add_eval_duration(Utc::now().signed_duration_since(start).to_std().unwrap());
 
         // Return the result of evaluation
         res.map_err(|e| e.0)

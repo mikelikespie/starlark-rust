@@ -61,6 +61,7 @@ use crate::values::OwnedFrozenValue;
 use crate::values::Trace;
 use crate::values::Tracer;
 use crate::values::Value;
+use chrono::{Duration as OtherDuration, Utc};
 
 #[derive(Debug, thiserror::Error)]
 enum ModuleError {
@@ -386,7 +387,7 @@ impl Module {
             extra_value,
             heap_profile_on_freeze,
         } = self;
-        let start = Instant::now();
+        let start = Utc::now();
         // This is when we do the GC/freeze, using the module slots as roots
         // Note that we even freeze anonymous slots, since they are accessed by
         // slot-index in the code, and we don't walk into them, so don't know if
@@ -431,7 +432,7 @@ impl Module {
             heap: freezer.into_ref(),
             module: frozen_module_ref,
             extra_value,
-            eval_duration: start.elapsed() + eval_duration.get(),
+            eval_duration: Utc::now().signed_duration_since(start).to_std().unwrap() + eval_duration.get(),
         })
     }
 

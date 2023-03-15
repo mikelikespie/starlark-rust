@@ -25,6 +25,7 @@ rust_library(
         "@crate_index//:anyhow",
         "@crate_index//:bumpalo",
         "@crate_index//:clap",
+        "@crate_index//:chrono",
         "@crate_index//:debugserver-types",
         "@crate_index//:either",
         "@crate_index//:erased-serde",

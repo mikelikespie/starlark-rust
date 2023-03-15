@@ -27,7 +27,7 @@
 use std::fmt::Debug;
 use std::marker::PhantomData;
 use std::mem;
-use std::num::NonZeroUsize;
+use std::num::NonZeroU64;
 
 use dupe::Dupe;
 use either::Either;
@@ -41,7 +41,7 @@ use crate::values::layout::heap::repr::AValueOrForward;
 
 /// Tagged pointer logically equivalent to `*mut AValueHeader`.
 #[derive(Clone, Copy, Dupe, PartialEq, Eq, Hash)]
-pub(crate) struct RawPointer(pub(crate) NonZeroUsize);
+pub(crate) struct RawPointer(pub(crate) NonZeroU64);
 
 impl Debug for RawPointer {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -52,15 +52,20 @@ impl Debug for RawPointer {
 }
 
 impl RawPointer {
+    // #[inline]
+    // pub(crate) unsafe fn new_unchecked(ptr: usize) -> RawPointer {
+    //     new_unchecked(ptr as u64)
+    // }
+
     #[inline]
-    pub(crate) unsafe fn new_unchecked(ptr: usize) -> RawPointer {
+    pub(crate) unsafe fn new_unchecked(ptr: u64) -> RawPointer {
         debug_assert!(ptr != 0);
-        RawPointer(NonZeroUsize::new_unchecked(ptr))
+        RawPointer(NonZeroU64::new_unchecked(ptr))
     }
 
     #[inline]
     pub(crate) fn ptr_value(self) -> usize {
-        self.0.get()
+        self.0.get() as usize
     }
 
     #[inline]
@@ -114,22 +119,22 @@ fn _test_lifetime_covariant<'a>(p: FrozenPointer<'static>) -> FrozenPointer<'a> 
     p
 }
 
-assert_eq_size!(Pointer<'static>, usize);
-assert_eq_size!(Option<Pointer<'static>>, usize);
-assert_eq_size!(FrozenPointer<'static>, usize);
-assert_eq_size!(Option<FrozenPointer<'static>>, usize);
+assert_eq_size!(Pointer<'static>, u64);
+assert_eq_size!(Option<Pointer<'static>>, u64);
+assert_eq_size!(FrozenPointer<'static>, u64);
+assert_eq_size!(Option<FrozenPointer<'static>>, u64);
 
-const TAG_BITS: usize = 0b111;
+const TAG_BITS: u64 = 0b11;
 
-const TAG_INT: usize = 0b010;
-const TAG_STR: usize = 0b100;
+const TAG_INT: u64 = 0b01;
+const TAG_STR: u64 = 0b10;
 // Pointer to an object, which is not frozen.
 // Note, an object can be changed from unfrozen to frozen, not vice versa.
-const TAG_UNFROZEN: usize = 0b001;
+const TAG_UNFROZEN: u64 = 0b00;// Making not supported in 32-bit since we just have 2 bits of tagging
 
 #[inline]
-unsafe fn untag_pointer<'a>(x: usize) -> &'a AValueOrForward {
-    cast::usize_to_ptr(x & !TAG_BITS)
+unsafe fn untag_pointer<'a>(x: u64) -> &'a AValueOrForward {
+    cast::usize_to_ptr((x & !TAG_BITS) as u32 as usize)
 }
 
 // #[allow(clippy::unused_unit)]
@@ -140,13 +145,13 @@ unsafe fn untag_pointer<'a>(x: usize) -> &'a AValueOrForward {
 // };
 
 #[inline]
-fn tag_int(x: i32) -> usize {
-    ((x as u32 as usize) << 3) | TAG_INT
+fn tag_int(x: i32) -> u64 {
+    ((x as u32 as u64) << 3) | TAG_INT
 }
 
 #[inline]
-fn untag_int(x: usize) -> i32 {
-    const INT_DATA_MASK: usize = 0xffffffff << 3;
+fn untag_int(x: u64) -> i32 {
+    const INT_DATA_MASK: u64 = 0xffffffff << 3;
     debug_assert!(x & !INT_DATA_MASK == TAG_INT);
 
     ((x as isize) >> 3) as i32
@@ -155,22 +160,36 @@ fn untag_int(x: usize) -> i32 {
 impl<'p> Pointer<'p> {
     #[inline]
     fn new(pointer: usize) -> Self {
-        let phantom = PhantomDataInvariant::new();
-        let pointer = unsafe { RawPointer::new_unchecked(pointer) };
-        Self { pointer, phantom }
+        Self::new_raw(pointer as u64)
     }
 
     #[inline]
+    fn new_raw(value: u64) -> Self {
+        let phantom = PhantomDataInvariant::new();
+        let pointer = unsafe { RawPointer::new_unchecked(value) };
+        Self { pointer, phantom }
+    }
+
+    // #[inline]
+    // fn new(pointer: u64) -> Self {
+    //     let phantom = PhantomDataInvariant::new();
+    //     let pointer = unsafe { RawPointer::new_unchecked(pointer) };
+    //     Self { pointer, phantom }
+    // }
+
+    #[inline]
     pub fn new_unfrozen_usize(x: usize, is_string: bool) -> Self {
+        let x = x as u64;
         debug_assert!((x & TAG_BITS) == 0);
         let x = if is_string { x | TAG_STR } else { x };
-        Self::new(x | TAG_UNFROZEN)
+        Self::new_raw(x | TAG_UNFROZEN)
     }
 
     #[inline]
     pub fn new_unfrozen_usize_with_str_tag(x: usize) -> Self {
+        let x = x as u64;
         debug_assert!((x & TAG_BITS & !TAG_STR) == 0);
-        Self::new(x | TAG_UNFROZEN)
+        Self::new_raw(x | TAG_UNFROZEN)
     }
 
     #[inline]
@@ -194,7 +213,7 @@ impl<'p> Pointer<'p> {
         if p & TAG_INT == 0 {
             Either::Left(unsafe { untag_pointer(p) })
         } else {
-            Either::Right(unsafe { cast::usize_to_ptr(p) })
+            Either::Right(unsafe { cast::usize_to_ptr(p as usize) })
         }
     }
 
@@ -258,10 +277,15 @@ impl<'p> Pointer<'p> {
 impl<'p> FrozenPointer<'p> {
     #[inline]
     pub(crate) unsafe fn new(pointer: usize) -> Self {
+        return Self::new_raw(pointer as u64);
+    }
+
+    #[inline]
+    pub(crate) unsafe fn new_raw(value: u64) -> Self {
         // Never zero because the only TAG which is zero is P1, and that must be a pointer
-        debug_assert!(pointer != 0);
-        debug_assert!((pointer & TAG_UNFROZEN) == 0);
-        let pointer = RawPointer::new_unchecked(pointer);
+        debug_assert!(value != 0);
+        debug_assert!((value & TAG_UNFROZEN) == 0);
+        let pointer = RawPointer::new_unchecked(value);
         Self {
             pointer,
             phantom: PhantomData,
@@ -270,15 +294,17 @@ impl<'p> FrozenPointer<'p> {
 
     #[inline]
     pub fn new_frozen_usize(x: usize, is_string: bool) -> Self {
+        let x = x as u64;
         debug_assert!((x & TAG_BITS) == 0);
         let x = if is_string { x | TAG_STR } else { x };
-        unsafe { Self::new(x) }
+        unsafe { Self::new_raw(x) }
     }
 
     #[inline]
     pub fn new_frozen_usize_with_str_tag(x: usize) -> Self {
+        let x = x as u64;
         debug_assert!((x & TAG_BITS & !TAG_STR) == 0);
-        unsafe { Self::new(x) }
+        unsafe { Self::new_raw(x) }
     }
 
     #[inline]
@@ -288,7 +314,7 @@ impl<'p> FrozenPointer<'p> {
 
     #[inline]
     pub(crate) fn new_int(x: i32) -> Self {
-        unsafe { Self::new(tag_int(x)) }
+        unsafe { Self::new_raw(tag_int(x)) }
     }
 
     /// It is safe to bitcast `FrozenPointer` to `Pointer`
@@ -330,7 +356,7 @@ impl<'p> FrozenPointer<'p> {
     pub(crate) unsafe fn unpack_ptr_no_int_no_str_unchecked(self) -> &'p AValueOrForward {
         let p = self.pointer.0.get();
         debug_assert!(p & TAG_BITS == 0);
-        cast::usize_to_ptr(p)
+        cast::usize_to_ptr(p as usize)
     }
 }
 
