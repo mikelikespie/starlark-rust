@@ -162,13 +162,13 @@ impl Arena {
         &'v mut MaybeUninit<AValueRepr<T>>,
         &'v mut [MaybeUninit<T::ExtraElem>],
     ) {
-        // assert!(
-        //     mem::align_of::<T>() <= mem::align_of::<AValueHeader>(),
-        //     "Unexpected alignment in Starlark arena. Type {} has alignment {}, expected <= {}",
-        //     std::any::type_name::<T>(),
-        //     mem::align_of::<T>(),
-        //     mem::align_of::<AValueHeader>()
-        // );
+        assert!(
+            mem::align_of::<T>() <= mem::align_of::<AValueHeader>(),
+            "Unexpected alignment in Starlark arena. Type {} has alignment {}, expected <= {}",
+            std::any::type_name::<T>(),
+            mem::align_of::<T>(),
+            mem::align_of::<AValueHeader>()
+        );
 
         let size = T::memory_size_for_extra_len(extra_len).add_header();
         let layout = size.layout();
